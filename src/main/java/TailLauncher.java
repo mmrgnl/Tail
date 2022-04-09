@@ -37,6 +37,10 @@ public class TailLauncher {
         new TailLauncher().launch(args);
     }
 
+
+
+
+
     private void launch(String[] args) {
         CmdLineParser parser = new CmdLineParser(this);
 
@@ -50,6 +54,12 @@ public class TailLauncher {
         }
 
 
+
+
+
+
+
+
         Tail tail = new Tail(Out, symbols, bars);
 
         try {
@@ -61,4 +71,11 @@ public class TailLauncher {
 
 
     }
+
+
+
+
+
+
+
 }

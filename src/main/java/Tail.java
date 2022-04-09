@@ -22,8 +22,11 @@ public class Tail {
 
 
     }
+    public static void TailFound(Tail tail, String fileN) {
 
-    public void TailFound(Tail tail, String fileN) {
+
+
+
 
         if (tail.LastLine == null && tail.LastSymbol == null) EmptyOut(fileN, tail.OutName);
 
@@ -36,7 +39,7 @@ public class Tail {
 
 
 
-    private void EmptyOut(String inName, String outName) {
+    private static void EmptyOut(String inName, String outName) {
 
         String content = "";
         Path filePath = Paths.get(inName);
@@ -63,7 +66,7 @@ public class Tail {
         }
     }
 
-    private void SymbolsOut(String inName, String outName, int count) {
+    private  static void SymbolsOut(String inName, String outName, int count) {
 
 
         String content = "";
@@ -96,50 +99,32 @@ public class Tail {
     }
 
 
-    private void BarsOut(String inName, String outName, int bars) {
+    private  static void BarsOut(String inName, String outName, int bars) {
 
 
-        List FileList = new ArrayList();
+
+
+        Path path = Path.of(inName);
 
         try {
-            File file = new File(inName);
+            List<String> list = Files.readAllLines(path);
 
-            FileReader fr = new FileReader(file);
 
-            BufferedReader reader = new BufferedReader(fr);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(outName));
 
-            String line = reader.readLine();
 
-            while (line != null) {
+            for (int i = bars+1; i != 0; i--) {
 
-                line = reader.readLine();
+                writer.write(list.get(list.size()-i));
 
-                FileList.add(line);
+                if (i != bars-1) writer.newLine();
+               // System.out.println(list.get(list.size()-i-1));
             }
 
-            reader.close();
-        } catch (FileNotFoundException e) {
-
-            e.printStackTrace();
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
-        }
-
-        File file = new File(outName);
-        FileWriter writer = null;
-        try {
-            writer = new FileWriter(file);
-
-
-            for (int i = bars; i > 0; i--) {
-
-                writer.write(FileList.get(FileList.size()-bars).toString());
-
-            }
 
             writer.close();
+
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -147,6 +132,7 @@ public class Tail {
 
 
     }
+
 
 
 }
