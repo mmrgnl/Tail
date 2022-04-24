@@ -1,40 +1,52 @@
-import java.io.*;
 import static org.junit.jupiter.api.Assertions.*;
 import org.apache.commons.io.FileUtils;
+import java.io.*;
 
 class TailTest {
 
+    String outFile = "files/OutFile.txt";
+
     @org.junit.jupiter.api.Test
 
-    void TailFound(){
+    void EmptyOut() {
 
-        Tail tail = new Tail("files/text2.txt", null, null);
-        String in = "files/text1.txt";
-        Tail.TailFound(tail, in);
+        TailLauncher.TailFound(outFile, null, null, "files/InFile2.txt");
         try {
-            assertTrue(FileUtils.contentEquals(new File(tail.OutName), new File("files/test1.txt")),
-                    "The files differ!");
-       } catch (IOException e) {
-            e.printStackTrace();
-      }
-        tail =  new Tail("files/text2.txt", 12, null);
-        Tail.TailFound(tail, in);
-        try {
-            assertTrue(FileUtils.contentEquals(new File(tail.OutName), new File("files/test2.txt")),
+            assertTrue(FileUtils.contentEquals(new File(outFile), new File("files/test1.txt")),
                     "The files differ!");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        tail = new Tail("files/text2.txt", null, 4);
-        in = "files/text3.txt";
-        Tail.TailFound(tail, in);
+        new File(outFile).delete();
+    }
+
+    @org.junit.jupiter.api.Test
+
+    void SymbolsOut() {
+
+        TailLauncher.TailFound(outFile, 12, null, "files/InFile1.txt");
         try {
-            assertTrue(FileUtils.contentEquals(new File(tail.OutName), new File("files/test3.txt")),
+            assertTrue(FileUtils.contentEquals(new File(outFile), new File("files/test2.txt")),
                     "The files differ!");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        new File(tail.OutName).delete();
+        new File(outFile).delete();
+
+    }
+
+    @org.junit.jupiter.api.Test
+
+    void LinesOut(){
+
+        TailLauncher.TailFound(outFile, null, 4, "files/InFile2.txt");
+        try {
+            assertTrue(FileUtils.contentEquals(new File(outFile), new File("files/test3.txt")),
+                    "The files differ!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        new File(outFile).delete();
     }
 
 }
